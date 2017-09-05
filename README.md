@@ -1,5 +1,19 @@
 # centos-gm2-dev
 
+Forked September 2017 by James Stapleton to
+
+  * use vagrant to build multiple 'tiers' of our development environment (optionally including graphical environment, profilers, or other things)
+  * create disk images that the Muon g-2 users can just download and plug into VirtualBox
+  * improve compatibility with Linux and Windows
+  * include facility to set up pip (in a shared folder on the host)
+  * gallery and heist
+  * an example file (or a README or something) in the home folder?
+  * update krb5.conf link and some other minor things
+
+
+
+# Original README
+
 This repository has a Vagrantfile and auxillary files for building a Centos 6.7 (equivalent to SLF6) Virtual Machine suitable for development of Muon g-2 offline code. 
 
 The idea is to have a virtual machine with a run-time environment similar to that of Grid jobs along with a partial development environment. You could do your code editing with the included Emacs editor, or, with VirtualBox's folder sharing, use a IDE on your host system (Windows or Mac). With Eclipse on the Mac, I have been able to develop and build code within the VM. A debugger (gdb) and several profilers (see below) are included in the installation as well. 
