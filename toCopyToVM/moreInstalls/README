@@ -1,6 +1,0 @@
-Run these scripts to install two profilers: igprof and OpenSpeedShop
-
-install-igprof.sh            -- Install the igprof profiler
-install-openspeedshop.sh     -- Install the OpenSpeedShop profiler
-
-Once you are done, you can delete this directory

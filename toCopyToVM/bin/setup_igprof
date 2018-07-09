@@ -1,9 +1,0 @@
-# Setup OpenSpeedShop
-
-if [ -z "$PYTHON_DIR" ]; then
-  source /opt/rh/devtoolset-2/enable
-else
-  unsetup python
-fi
-
-export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}

@@ -7,28 +7,24 @@ echo 'PROVISIONING...'
 
 echo '..Udpate yum database..'
 yum -y update
+yum clean all
 
 echo '..Install epel and redhat-lsb-core repositories..'
-yum -y install epel-release
-yum -y install redhat-lsb-core
+yum -y install epel-release redhat-lsb-core perl expat-devel glibc-devel gdb time git
+yum clean all
 
 echo '..Install some developer tools..'
-yum -y install emacs screen git expat-devel perl gcc glibc-devel gdb freetype-devel mesa-libGL-devel mesa-libGLU-devel meld valgrind
+yum -y install emacs screen gcc gdb meld valgrind ncurses-devel
+yum clean all
 yum -y install openssl-devel tar zip xz bzip2 patch wget which sudo strace
-
+yum clean all
 yum -y install kernel-devel
-
-echo '..Install X11 and openGL..'
-yum -y groupinstall "X Window System" 
-ln -sf /usr/lib64/libGLU.so.1.3.1 /usr/lib64/libGLU.so  # for cadmesh
-ln -sf /usr/lib64/libGL.so.1.2.0 /usr/lib64/libGL.so
-ln -sf /usr/lib64/libSM.so.6.0.1 /usr/lib64/libSM.so
-ln -sf /usr/lib64/libICE.so.6.3.0 /usr/lib64/libICE.so
-ln -sf /usr/lib64/libX11.so.6.3.0 /usr/lib64/libX11.so
-ln -sf /usr/lib64/libXext.so.6.4.0 /usr/lib64/libXext.so
-ln -sf /usr/lib64/libXmu.so.6.2.0 /usr/lib64/libXmu.so
-
-yum -y install libXt-devel
+yum clean all
+yum -y install freetype-devel libXpm-devel libXmu-devel mesa-libGL-devel mesa-libGLU-devel libXt-devel
+yum clean all
+yum -y groupinstall "X Window System" "Desktop"
+yum -y groupinstall fonts
+yum -y install tigervnc-server xorg-x11-fonts-Type1
 
 echo '..Install Kerberos..'
 yum -y install krb5-workstation
@@ -40,6 +36,7 @@ rpm --import RPM-GPG-KEY-sl
 rm -f RPM-GPG-KEY-sl
 yum install -y krb5-fermi-getcert --enablerepo=slf
 yum install -y cigetcert --enablerepo=slf-security 
+yum clean all
 
 echo '..Install netdata..'
 yum -y install zlib-devel libuuid-devel libmnl-devel gcc make git autoconf \
@@ -55,6 +52,7 @@ echo '..Install CVMFS..'
 yum -y install yum-plugin-priorities
 rpm -Uvh https://repo.grid.iu.edu/osg/3.3/osg-3.3-el6-release-latest.rpm
 yum -y install osg-oasis
+yum install -y osg-wn-client
 
 echo "user_allow_other" > /etc/fuse.conf
 grep -q -F '/cvmfs' /etc/auto.master || echo "/cvmfs /etc/auto.cvmfs" >> /etc/auto.master
@@ -74,28 +72,37 @@ CVMFS_QUOTA_LIMIT=20000
 CVMFS_CACHE_BASE=/var/cache/cvmfs
 EOF
 
+yum install -y lsof xrootd-server
+
 # Add zerofree (needed to compact VDI disk)
 yum -y install zerofree
-
 yum clean all
 
 # Let's get tmux and friends
-wget https://github.com/libevent/libevent/releases/download/release-2.0.22-stable/libevent-2.0.22-stable.tar.gz
-tar xvf libevent-2.0.22-stable.tar.gz
-cd libevent-2.0.22-stable
+wget https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz
+tar xvf libevent-2.1.8-stable.tar.gz
+cd libevent-2.1.8-stable
 ./configure
 make
 make install
 cd ..
 rm -rf libevent* 
 
-wget https://github.com/tmux/tmux/releases/download/2.3/tmux-2.3.tar.gz
-tar xvf tmux-2.3.tar.gz
-cd tmux-2.3
+wget https://github.com/tmux/tmux/releases/download/2.5/tmux-2.5.tar.gz
+tar xvf tmux-2.5.tar.gz
+cd tmux-2.5
 ./configure
 make
 make install
 cd ..
 rm -rf tmux*
 
-echo '...PROVISIONING COMPLETE - Run more setups in $HOME/moreInstalls'
+# Get sshfs
+yum -y install fuse-sshfs
+mkdir /pnfs
+chown vagrant /pnfs
+chgrp vagrant /pnfs
+
+yum clean all
+
+echo '...PROVISIONING COMPLETE'
