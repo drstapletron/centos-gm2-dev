@@ -1,6 +1,11 @@
 # centos-gm2-dev
 
-Forked September 2017 by James Stapleton to
+
+This repository has a Vagrantfile and auxillary files for building a Centos 6.8 (equivalent to SLF6) Virtual Machine suitable for development of Muon g-2 offline code. 
+
+The idea is to have a virtual machine with a run-time environment similar to that of grid jobs along with a development environment. See below for some workflow ideas.
+
+Forked September 2017 to
 
   * use vagrant to build multiple 'tiers' of our development environment (optionally including graphical environment, profilers, or other things)
   * create disk images that the Muon g-2 users can just download and plug into VirtualBox
@@ -10,13 +15,6 @@ Forked September 2017 by James Stapleton to
   * an example file (or a README or something) in the home folder?
   * update krb5.conf link and some other minor things
 
-
-
-# Original README
-
-This repository has a Vagrantfile and auxillary files for building a Centos 6.8 (equivalent to SLF6) Virtual Machine suitable for development of Muon g-2 offline code. 
-
-The idea is to have a virtual machine with a run-time environment similar to that of grid jobs along with a development environment. See below for some workflow ideas. 
 
 ## 1 Terminology
 
